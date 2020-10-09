@@ -20,13 +20,17 @@ type Page struct {
 func NewPage(path string) *Page {
 	filename := path[strings.LastIndex(path, "/")+1:]
 	filenameWithoutExtension := filename[:strings.LastIndex(filename, ".")]
-
+	numberOfSubdirectories := strings.Count(path, "/") - 1
+	subDirectories := ""
+	if numberOfSubdirectories > 0 {
+		subDirectories = path[strings.Index(path, "/")+1 : strings.LastIndex(path, "/")]
+	}
 	return &Page{
 		FullPath:                 path,
 		FileName:                 filename,
 		FileNameWithoutExtension: filenameWithoutExtension,
-		NumberOfSubdirectories:   strings.Count(path, "/") - 1,
-		SubDirectories:           path[strings.Index(path, "/")+1 : strings.LastIndex(path, "/")],
+		NumberOfSubdirectories:   numberOfSubdirectories,
+		SubDirectories:           subDirectories,
 	}
 }
 
@@ -41,6 +45,5 @@ func (p *PageIterator) HasNext() bool {
 func (p *PageIterator) Next() *Page {
 	pagePath := p.pages[p.currentIndex]
 	p.currentIndex++
-
 	return NewPage(pagePath)
 }

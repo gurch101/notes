@@ -45,6 +45,7 @@ func NewMarkdownParser() *MarkdownParser {
 				),
 				meta.Meta,
 			),
+			goldmark.WithParserOptions(parser.WithAttribute()),
 		),
 		cssBuf: &cssBuf,
 	}
@@ -55,7 +56,7 @@ func (p *MarkdownParser) Transform(markdown []byte) (*HTML, error) {
 	var buf bytes.Buffer
 
 	context := parser.NewContext()
-
+	parser.WithAttribute()
 	if err := p.parser.Convert(markdown, &buf, parser.WithContext(context)); err != nil {
 		return nil, fmt.Errorf("unable to parse markdown")
 	}

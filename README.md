@@ -15,11 +15,12 @@ mac // TODO: GOOS=darwin GOARCH=amd64
 1. create the following directory structure:
 
 ```
-/src
+/pages
     note1.md            # notes can contain YAML front-matter
-/template
-    css/                # template/css is minified and copied to dist/css
-    note.tmpl           # template/*.tmpl are simple Go HTML files that can consume note front-matter
+    note2.yml           # if you don't need markdown, just use raw yaml files
+/templates
+    css/                # templates/css is minified and copied to dist/css
+    page.tmpl           # templates/*.tmpl are simple Go HTML files that can consume note front-matter
 ```
 
 2. run `notes build` to build to `dist/`
@@ -31,12 +32,11 @@ mac // TODO: GOOS=darwin GOARCH=amd64
 `/src/**/index.md` is bound to `index.tmpl`
 if a `template/tags.tmpl` exists, it's passed all file front-matter by tag for any markdown file that contains tags. Tag files are output to `/dist/tags/<tag-name>.html`
 If a `template/collection.tmpl` exists, it's passed all notes in title order for a given collection
-All other files in `/src` are bound to `note.tmpl`
+All other files in `/src` are bound to `page.tmpl`
 
 # TODO
 
 - add github pipeline (fmt, vet, test, coverage, build, create release - https://github.com/actions/create-release)
-- index.md -> index.tmpl -> index.html for TOC
 - Add homepage link
 - separate binary for "notes"
 - args parser for "notes build"
